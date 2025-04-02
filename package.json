@@ -1,7 +1,7 @@
 {
   "name": "embeddable-test-vite",
   "version": "0.0.0",
-  "private": true,
+  "private": false,
   "description": "Small description for embeddable-test-vite goes here",
   "repository": "",
   "license": "MIT",
@@ -11,6 +11,7 @@
     "test": "tests"
   },
   "scripts": {
+    "prepack": "concurrently \"pnpm build\" \"pnpm build:types\" --names \"build,types\"",
     "build": "vite build",
     "format": "prettier . --cache --write",
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\" --prefixColors auto",
@@ -23,6 +24,7 @@
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "lint:types": "glint",
+    "build:types": "glint --declaration --emitDeclarationOnly",
     "start": "vite",
     "test": "concurrently \"pnpm:lint\" \"pnpm:test:*\" --names \"lint,test:\" --prefixColors auto",
     "test:ember": "vite build --mode test && ember test --path dist"
@@ -110,8 +112,23 @@
     "type": "app",
     "version": 2
   },
+  "files": [
+    "dist",
+    "dist-types"
+  ],
+  "main": "./dist/embeddable-test-vite.umd.js",
+  "module": "./dist/embeddable-test-vite.mjs",
   "exports": {
+    ".": {
+      "types": "./dist-types/main.d.ts",
+      "import": "./dist/embeddable-test-vite.mjs",
+      "require": "./dist/embeddable-test-vite.umd.js"
+    },
     "./tests/*": "./tests/*",
-    "./*": "./app/*"
+    "./*": {
+      "types": "./dist-types/*.d.ts",
+      "default": "./app/*"
+    },
+    "./style.css": "./dist/embeddable-test-vite.css"
   }
 }

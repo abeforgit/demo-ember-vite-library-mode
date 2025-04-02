@@ -1,6 +1,6 @@
 {
   "extends": "@tsconfig/ember/tsconfig.json",
-  "include": ["app", "tests", "types"],
+  "include": ["app", "tests", "types", "main.ts"],
   "glint": {
     "environment": ["ember-loose", "ember-template-imports"]
   },
@@ -12,8 +12,10 @@
     */
     "noEmitOnError": false,
 
-    "declaration": false,
-    "declarationMap": false,
+    // "declaration": false,
+    // "declarationMap": false,
+    "declarationDir": "./dist-types",
+    "noEmit": false,
 
     /**
       https://www.typescriptlang.org/tsconfig#allowImportingTsExtensions

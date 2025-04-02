@@ -1,5 +1,8 @@
 # compiled output
 /dist/
+/tmp/
+*.tgz
+/dist-types/
 /declarations/
 
 # dependencies
